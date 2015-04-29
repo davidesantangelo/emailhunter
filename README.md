@@ -52,6 +52,8 @@ result.exist
 result.sources
 ```
 
+## License
+The restcountry GEM is released under the MIT License.
 
 
 ## Contributing
