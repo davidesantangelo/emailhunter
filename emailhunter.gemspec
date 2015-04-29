@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
 
   spec.summary       = %q{A tiny ruby wrapper around Email Hunter API }
-  spec.description   = %q{A tiny ruby wrapper around Email Hunter API }
+  spec.description   = %q{A tiny ruby wrapper around Email Hunter API. Email Hunter helps sales people reach their targets and increase their sales. }
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }

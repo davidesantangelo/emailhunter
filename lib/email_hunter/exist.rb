@@ -1,5 +1,6 @@
 require 'faraday'
 require 'json'
+require 'ostruct'
 
 API_EXISTS_URL = 'https://api.emailhunter.co/v1/exist?'
 
