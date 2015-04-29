@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ```ruby
 require 'emailhunter'
-email = EmailHunter.new('Your secret API key')
+email_hunter = EmailHunter.new('Your secret API key')
 
 ```
 Your secret API key. You can generate it in your dashboard from https://emailhunter.co
@@ -30,7 +30,7 @@ Your secret API key. You can generate it in your dashboard from https://emailhun
 ## Domain search API
 Get the list of all the emails from a given domain name. Each email is returned with our source(s), its type (generic or personnal) and the date it was extracted on
 ```ruby
-result = email.search('stripe.com')
+result = email_hunter.search('stripe.com')
 ```
 
 ## Accessing domain search response
@@ -44,7 +44,7 @@ result.emails
 ## Email check API
 Find if a given email exist. If it does, we'll return where it was found.
 ```ruby
-email.exist('bonjour@firmapi.com')
+email_hunter.exist('bonjour@firmapi.com')
 ```
 
 ## Accessing email check response
