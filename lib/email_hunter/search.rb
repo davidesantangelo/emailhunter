@@ -11,13 +11,13 @@ module EmailHunter
     def initialize(domain, key)
       @domain = domain
       @key = key
-  	end
+    end
 
     def hunt
       response = apiresponse
       OpenStruct.new(response) unless response.empty?
     end
-    
+
     private
 
     def apiresponse
