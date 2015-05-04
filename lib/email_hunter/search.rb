@@ -8,8 +8,8 @@ module EmailHunter
   class Search
     attr_reader :status, :results, :emails
 
-  	def initialize(domain, key)
-  		@domain = domain
+    def initialize(domain, key)
+      @domain = domain
       @key = key
   	end
 
@@ -17,7 +17,7 @@ module EmailHunter
       response = apiresponse
       OpenStruct.new(response) unless response.empty?
     end
-
+    
     private
 
     def apiresponse
