@@ -15,7 +15,7 @@ module EmailHunter
 
     def hunt
       response = apiresponse
-      OpenStruct.new(response) unless response.empty?
+      Struct.new(*response.keys).new(*response.values) unless response.empty?
     end
 
     private
@@ -23,7 +23,7 @@ module EmailHunter
     def apiresponse
       url = "#{API_EXISTS_URL}email=#{@email}&api_key=#{@key}"
       response = Faraday.get(URI.parse(URI.encode(url)))
-      response.success? ? JSON.parse(response.body) : []
+      response.success? ? JSON.parse(response.body, {:symbolize_names => true}) : []
     end
   end
 end
