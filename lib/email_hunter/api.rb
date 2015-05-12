@@ -11,10 +11,12 @@ module EmailHunter
   		@key = key
   	end
 
+    # Domain search API
   	def search(domain)
   		EmailHunter::Search.new(domain, self.key).hunt
   	end
 
+    # Email Check API
   	def exist(email)
   		EmailHunter::Exist.new(email, self.key).hunt
   	end
