@@ -5,7 +5,7 @@ API_SEARCH_URL = 'https://api.emailhunter.co/v1/search?'
 
 module EmailHunter
   class Search
-    attr_reader :status, :results, :emails, :offset
+    attr_reader :status, :results, :webmail, :emails, :offset
 
     def initialize(domain, key)
       @domain = domain
@@ -21,7 +21,7 @@ module EmailHunter
 
     def apiresponse
       url = "#{API_SEARCH_URL}domain=#{@domain}&api_key=#{@key}"
-      response = Faraday.get(URI.parse(URI.encode(url)))
+      response = (Faraday.new URI.parse(URI.encode(url)), :ssl => {:verify => false}).get
       response.success? ? JSON.parse(response.body, {symbolize_names: true}) : []
     end
   end

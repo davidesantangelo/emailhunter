@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'vcr'
 
 describe EmailHunter do
-  let(:key) { "8b0d9f867c33b8e9d56b0e81c1637b2463978249" }
+  let(:key) { "50204eb5ba5712bf2733b567355b8f91881e224d" }
 
   it 'has a version number' do
     expect(EmailHunter::VERSION).not_to be nil
@@ -14,7 +14,7 @@ describe EmailHunter do
     	expect(email_hunter.search('google.com').status).to eq('success')
   	end
   end
-
+  
   it 'search API expect results > 0' do
   	VCR.use_cassette 'search API expect results > 0' do
     	email_hunter = EmailHunter.new(key)
@@ -43,10 +43,10 @@ describe EmailHunter do
   	end
   end
 
-  it 'search API expect first email type == generic with stripe.com domain' do
-    VCR.use_cassette 'search API expect first email type == generic with stripe.com domain' do
+  it 'search API expect first email type == personal with stripe.com domain' do
+    VCR.use_cassette 'search API expect first email type == personal with stripe.com domain' do
       email_hunter = EmailHunter.new(key)
-      expect(email_hunter.search('stripe.com').emails.first[:type]).to be == "generic"
+      expect(email_hunter.search('stripe.com').emails.first[:type]).to be == "personal"
     end
   end
 end
