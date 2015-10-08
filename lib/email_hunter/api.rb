@@ -2,11 +2,12 @@ require 'uri'
 
 require File.expand_path(File.join(File.dirname(__FILE__), 'search'))
 require File.expand_path(File.join(File.dirname(__FILE__), 'exist'))
+require File.expand_path(File.join(File.dirname(__FILE__), 'generate'))
 
 module EmailHunter
   class Api
     attr_reader :key
-    
+
   	def initialize(key)
   		@key = key
   	end
@@ -19,6 +20,11 @@ module EmailHunter
     # Email Check API
   	def exist(email)
   		EmailHunter::Exist.new(email, self.key).hunt
+  	end
+
+    # Email Generate API
+  	def generate(domain, first_name, last_name)
+  		EmailHunter::Generate.new(domain, first_name, last_name, self.key).hunt
   	end
   end
 end

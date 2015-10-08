@@ -1,6 +1,7 @@
 # Emailhunter
 
-A tiny ruby wrapper around Email Hunter API 
+A tiny ruby wrapper around Email Hunter API. Direct access to all the web's email addresses.
+
 
 ## Installation
 
@@ -28,7 +29,7 @@ email_hunter = EmailHunter.new('Your secret API key')
 Your secret API key. You can generate it in your dashboard from https://emailhunter.co
 
 ## Domain search API
-Get the list of all the emails from a given domain name. Each email is returned with our source(s), its type (generic or personnal) and the date it was extracted on
+Returns all the email addresses found using one given domain name, with our sources.
 ```ruby
 result = email_hunter.search('stripe.com')
 ```
@@ -42,7 +43,7 @@ result.emails
 
 
 ## Email check API
-Find if a given email exist. If it does, we'll return where it was found.
+Checks if a given email address has been found in our base and returns the sources.
 ```ruby
 email_hunter.exist('bonjour@firmapi.com')
 ```
@@ -53,6 +54,19 @@ result.status
 result.email
 result.exist
 result.sources
+```
+
+## Generate  API
+Guesses the most likely email of a person from his first name, his last name and a domain name.
+```ruby
+email_hunter.generate('gmail.com', 'Davide', 'Santangelo')
+```
+
+## Accessing email check response
+```ruby
+result.status
+result.email
+result.score
 ```
 
 ## License
