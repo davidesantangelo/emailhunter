@@ -38,7 +38,9 @@ result = email_hunter.search('stripe.com')
 ```ruby
 result.status
 result.results
+result.webmail
 result.emails
+result.offset
 ```
 
 
