@@ -64,7 +64,7 @@ Guesses the most likely email of a person from his first name, his last name and
 email_hunter.generate('gmail.com', 'Davide', 'Santangelo')
 ```
 
-## Accessing email check response
+## Accessing generate response
 ```ruby
 result.status
 result.email
