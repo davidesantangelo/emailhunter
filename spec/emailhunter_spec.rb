@@ -43,6 +43,13 @@ describe EmailHunter do
   	end
   end
 
+  it 'verify API expect status \'success\'' do
+  	VCR.use_cassette 'verify API expect status \'success\'' do
+    	email_hunter = EmailHunter.new(key)
+    	expect(email_hunter.verify('bonjour@firmapi.com').exist).to eq('success')
+  	end
+  end
+
   it 'search API expect first email type == personal with stripe.com domain' do
     VCR.use_cassette 'search API expect first email type == personal with stripe.com domain' do
       email_hunter = EmailHunter.new(key)
