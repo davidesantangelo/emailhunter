@@ -42,19 +42,25 @@ result.webmail
 result.emails
 result.offset
 ```
-
-
-## Email check API
-Checks if a given email address has been found in our base and returns the sources.
+## Email Verify API
+Allows you to verify the deliverability of an email address.
 ```ruby
-email_hunter.exist('bonjour@firmapi.com')
+email_hunter.verify('bonjour@firmapi.com')
 ```
 
-## Accessing email check response
+## Accessing email verify response
 ```ruby
 result.status
 result.email
-result.exist
+result.score
+result.regexp
+result.gibberish
+result.disposable
+result.webmail
+result.mx_records
+result.smtp_server
+result.smtp_check
+result.accept_all
 result.sources
 ```
 

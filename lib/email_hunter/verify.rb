@@ -1,11 +1,11 @@
 require 'faraday'
 require 'json'
 
-API_EXISTS_URL = 'https://api.emailhunter.co/v1/exist?'
+API_VERIFY_URL = 'https://api.emailhunter.co/v1/verify?'
 
 module EmailHunter
-  class Exist
-    attr_reader :status, :email, :exist, :sources
+  class Verify
+    attr_reader :status, :email, :result, :score, :regexp, :gibberish, :disposable, :webmail,:mx_records,:smtp_server, :smtp_check,:accept_all, :sources
 
     def initialize(email, key)
       @email = email
@@ -20,7 +20,7 @@ module EmailHunter
     private
 
     def apiresponse
-      url = URI.parse(URI.encode("#{API_EXISTS_URL}email=#{@email}&api_key=#{@key}"))
+      url = URI.parse(URI.encode("#{API_VERIFY_URL}email=#{@email}&api_key=#{@key}"))
       response = Faraday.new(url).get
       response.success? ? JSON.parse(response.body, {symbolize_names: true}) : []
     end
