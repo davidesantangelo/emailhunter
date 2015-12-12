@@ -29,20 +29,6 @@ describe EmailHunter do
     end
   end
 
-  it 'exists API expect status \'success\'' do
-  	VCR.use_cassette 'exists API expect status \'success\'' do
-    	email_hunter = EmailHunter.new(key)
-    	expect(email_hunter.exist('bonjour@firmapi.com').status).to eq('success')
-  	end
-  end
-
-  it 'exists API expect status \'true\'' do
-  	VCR.use_cassette 'exists API expect status \'true\'' do
-    	email_hunter = EmailHunter.new(key)
-    	expect(email_hunter.exist('bonjour@firmapi.com').exist).to eq(true)
-  	end
-  end
-
   it 'verify API expect status \'success\'' do
   	VCR.use_cassette 'verify API expect status \'success\'' do
     	email_hunter = EmailHunter.new(key)
