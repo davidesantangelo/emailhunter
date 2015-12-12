@@ -23,9 +23,9 @@ module EmailHunter
   	end
 
     # Email Generate API
-  	def generate(domain, first_name, last_name)
-  		EmailHunter::Generate.new(domain, first_name, last_name, self.key).hunt
-  	end
+    def generate(domain, first_name, last_name)
+      EmailHunter::Generate.new(domain, first_name, last_name, self.key).hunt
+    end
 
     def verify(email)
       EmailHunter::Verify.new(email, self.key).hunt
