@@ -9,17 +9,17 @@ describe EmailHunter do
   end
 
   it 'search API expect status \'success\'' do
-  	VCR.use_cassette 'search API expect status \'success\'' do
-    	email_hunter = EmailHunter.new(key)
-    	expect(email_hunter.search('google.com', {offset: 10}).status).to eq('success')
-  	end
+    VCR.use_cassette 'search API expect status \'success\'' do
+      email_hunter = EmailHunter.new(key)
+      expect(email_hunter.search('google.com', {offset: 10}).status).to eq('success')
+    end
   end
 
   it 'search API expect results > 0' do
-  	VCR.use_cassette 'search API expect results > 0' do
-    	email_hunter = EmailHunter.new(key)
-    	expect(email_hunter.search('google.com').results).to be > 0
-  	end
+    VCR.use_cassette 'search API expect results > 0' do
+      email_hunter = EmailHunter.new(key)
+      expect(email_hunter.search('google.com').results).to be > 0
+    end
   end
 
   it 'search API expect offset == 0 with stripe.com domain' do
@@ -30,10 +30,10 @@ describe EmailHunter do
   end
 
   it 'verify API expect status \'success\'' do
-  	VCR.use_cassette 'verify API expect status \'success\'' do
-    	email_hunter = EmailHunter.new(key)
-    	expect(email_hunter.verify('bonjour@firmapi.com').score).to be > 0
-  	end
+    VCR.use_cassette 'verify API expect status \'success\'' do
+      email_hunter = EmailHunter.new(key)
+      expect(email_hunter.verify('bonjour@firmapi.com').score).to be > 0
+    end
   end
 
   it 'search API expect first email type == generic with stripe.com domain' do
@@ -44,9 +44,9 @@ describe EmailHunter do
   end
 
   it 'expect davide.santangelo@gmail.com API generate email' do
-  	VCR.use_cassette 'expect davide.santangelo@gmail.com API generate email' do
-    	email_hunter = EmailHunter.new(key)
-    	expect(email_hunter.generate('gmail.com', 'Davide', 'Santangelo').email).to eq('davide.santangelo@gmail.com')
-  	end
+    VCR.use_cassette 'expect davide.santangelo@gmail.com API generate email' do
+      email_hunter = EmailHunter.new(key)
+      expect(email_hunter.generate('gmail.com', 'Davide', 'Santangelo').email).to eq('davide.santangelo@gmail.com')
+    end
   end
 end
