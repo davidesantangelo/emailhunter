@@ -64,6 +64,24 @@ result.accept_all
 result.sources
 ```
 
+## Email Exist API
+This API call is deprecated, please use the email verification call instead.
+
+
+This API endpoint allows you to check if a given email address has been found on the web. If it has been found, it returns all the sources with the dates of the last crawls.
+
+```ruby
+email_hunter.exist('bonjour@firmapi.com')
+```
+
+## Accessing email verify response
+```ruby
+result.status
+result.email
+result.exist
+result.sources
+```
+
 ## Generate  API
 Guesses the most likely email of a person from his first name, his last name and a domain name.
 ```ruby
