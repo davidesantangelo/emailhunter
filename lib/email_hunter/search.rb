@@ -7,9 +7,10 @@ module EmailHunter
   class Search
     attr_reader :status, :results, :webmail, :emails, :offset
 
-    def initialize(domain, key)
+    def initialize(domain, key, params = {})
       @domain = domain
       @key = key
+      @params = params
     end
 
     def hunt
@@ -20,7 +21,10 @@ module EmailHunter
     private
 
     def apiresponse
-      url = URI.parse(URI.encode("#{API_SEARCH_URL}domain=#{@domain}&api_key=#{@key}"))
+      url =
+        URI.parse(URI.encode(
+          "#{API_SEARCH_URL}domain=#{@domain}&api_key=#{@key}&type=#{@params[:type]}&offset=#{@params[:offset]}")
+        )
       response = Faraday.new(url).get
       response.success? ? JSON.parse(response.body, {symbolize_names: true}) : []
     end

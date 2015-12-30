@@ -11,7 +11,7 @@ describe EmailHunter do
   it 'search API expect status \'success\'' do
   	VCR.use_cassette 'search API expect status \'success\'' do
     	email_hunter = EmailHunter.new(key)
-    	expect(email_hunter.search('google.com').status).to eq('success')
+    	expect(email_hunter.search('google.com', {offset: 10}).status).to eq('success')
   	end
   end
 
@@ -32,14 +32,14 @@ describe EmailHunter do
   it 'verify API expect status \'success\'' do
   	VCR.use_cassette 'verify API expect status \'success\'' do
     	email_hunter = EmailHunter.new(key)
-    	expect(email_hunter.verify('bonjour@firmapi.com').exist).to eq('success')
+    	expect(email_hunter.verify('bonjour@firmapi.com').score).to be > 0
   	end
   end
 
-  it 'search API expect first email type == personal with stripe.com domain' do
-    VCR.use_cassette 'search API expect first email type == personal with stripe.com domain' do
+  it 'search API expect first email type == generic with stripe.com domain' do
+    VCR.use_cassette 'search API expect first email type == generic with stripe.com domain' do
       email_hunter = EmailHunter.new(key)
-      expect(email_hunter.search('stripe.com').emails.first[:type]).to be == "personal"
+      expect(email_hunter.search('stripe.com').emails.first[:type]).to be == "generic"
     end
   end
 

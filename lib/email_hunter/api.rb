@@ -13,14 +13,19 @@ module EmailHunter
   	end
 
     # Domain search API
-  	def search(domain)
-  		EmailHunter::Search.new(domain, self.key).hunt
-  	end
+    def search(domain, params = {})
+      EmailHunter::Search.new(domain, self.key, params).hunt
+    end
 
-    # Email Check API
-  	def exist(email)
-  		EmailHunter::Exist.new(email, self.key).hunt
-  	end
+    # Email exist API
+    def exist(email)
+      EmailHunter::Exist.new(email, self.key).hunt
+    end
+
+    # Email verify API
+    def verify(email)
+      EmailHunter::Verify.new(email, self.key).hunt
+    end
 
     # Email Generate API
     def generate(domain, first_name, last_name)
