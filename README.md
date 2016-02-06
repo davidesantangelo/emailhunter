@@ -82,7 +82,7 @@ result.exist
 result.sources
 ```
 
-## Generate  API
+## Generate API
 Guesses the most likely email of a person from his first name, his last name and a domain name.
 ```ruby
 email_hunter.generate('gmail.com', 'Davide', 'Santangelo')
@@ -93,6 +93,18 @@ email_hunter.generate('gmail.com', 'Davide', 'Santangelo')
 result.status
 result.email
 result.score
+
+## Count API
+Returns the number of email addresses found for a domain. 
+_*This is a free API call*_
+```ruby
+email_hunter.count('gmail.com')
+```
+
+## Accessing count response
+```ruby
+result.status
+result.count
 ```
 
 ## License
