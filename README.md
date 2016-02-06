@@ -93,10 +93,10 @@ email_hunter.generate('gmail.com', 'Davide', 'Santangelo')
 result.status
 result.email
 result.score
+```
 
 ## Count API
-Returns the number of email addresses found for a domain. 
-_*This is a free API call*_
+Returns the number of email addresses found for a domain. This is a FREE API call.
 ```ruby
 email_hunter.count('gmail.com')
 ```
