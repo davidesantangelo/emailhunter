@@ -1,5 +1,6 @@
 require 'uri'
 
+require File.expand_path(File.join(File.dirname(__FILE__), 'exist'))
 require File.expand_path(File.join(File.dirname(__FILE__), 'search'))
 require File.expand_path(File.join(File.dirname(__FILE__), 'generate'))
 require File.expand_path(File.join(File.dirname(__FILE__), 'verify'))
