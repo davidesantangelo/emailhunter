@@ -2,6 +2,7 @@
 
 A tiny ruby wrapper around Email Hunter API. Direct access to all the web's email addresses.
 
+UPDATE (2016-12-02): gem updated with V2 API.
 
 ## Installation
 
@@ -36,11 +37,11 @@ result = email_hunter.search('stripe.com')
 
 ## Accessing domain search response
 ```ruby
-result.status
-result.results
-result.webmail
-result.emails
-result.offset
+result.fetch(:meta)
+result.fetch(:webmail)
+result.fetch(:emails)
+result.fetch(:pattern)
+result.fetch(:domain)
 ```
 ## Email Verify API
 Allows you to verify the deliverability of an email address.
@@ -50,21 +51,21 @@ email_hunter.verify('bonjour@firmapi.com')
 
 ## Accessing email verify response
 ```ruby
-result.status
-result.email
-result.score
-result.regexp
-result.gibberish
-result.disposable
-result.webmail
-result.mx_records
-result.smtp_server
-result.smtp_check
-result.accept_all
-result.sources
+result.fetch(:result)
+result.fetch(:score)
+result.fetch(:regexp)
+result.fetch(:gibberish)
+result.fetch(:disposable)
+result.fetch(:mx_records)
+result.fetch(:smtp_server)
+result.fetch(:smtp_check)
+result.fetch(:accept_all)
+result.fetch(:sources)
+result.fetch(:meta)
+
 ```
 
-## Email Exist API
+## Email Exist API (only for V1)
 This API call is deprecated, please use the email verification call instead.
 
 
@@ -82,17 +83,18 @@ result.exist
 result.sources
 ```
 
-## Generate API
+## Finder API (legacy generate)
 Guesses the most likely email of a person from his first name, his last name and a domain name.
 ```ruby
-email_hunter.generate('gmail.com', 'Davide', 'Santangelo')
+email_hunter.finder('gmail.com', 'Davide', 'Santangelo')
 ```
-
-## Accessing generate response
+## Accessing finder response
 ```ruby
-result.status
-result.email
-result.score
+result.fetch(:email)
+result.fetch(:score)
+result.fetch(:sources)
+result.fetch(:domain)
+result.fetch(:meta)
 ```
 
 ## Count API
@@ -103,8 +105,8 @@ email_hunter.count('gmail.com')
 
 ## Accessing count response
 ```ruby
-result.status
-result.count
+result.fetch(:data)
+result.fetch(:meta)
 ```
 
 ## License

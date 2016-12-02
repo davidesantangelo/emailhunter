@@ -1,11 +1,11 @@
 require 'faraday'
 require 'json'
 
-API_SEARCH_URL = 'https://api.emailhunter.co/v1/search?'
+API_SEARCH_URL = 'https://api.emailhunter.co/v2/domain-search?'
 
 module EmailHunter
   class Search
-    attr_reader :status, :results, :webmail, :emails, :offset
+    attr_reader :meta, :webmail, :emails, :pattern, :domain
 
     def initialize(domain, key, params = {})
       @domain = domain

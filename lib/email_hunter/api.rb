@@ -2,7 +2,7 @@ require 'uri'
 
 require File.expand_path(File.join(File.dirname(__FILE__), 'exist'))
 require File.expand_path(File.join(File.dirname(__FILE__), 'search'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'generate'))
+require File.expand_path(File.join(File.dirname(__FILE__), 'finder'))
 require File.expand_path(File.join(File.dirname(__FILE__), 'verify'))
 require File.expand_path(File.join(File.dirname(__FILE__), 'count'))
 
@@ -29,9 +29,9 @@ module EmailHunter
       EmailHunter::Verify.new(email, self.key).hunt
     end
 
-    # Email Generate API
-    def generate(domain, first_name, last_name)
-      EmailHunter::Generate.new(domain, first_name, last_name, self.key).hunt
+    # Email Finder API
+    def finder(domain, first_name, last_name)
+      EmailHunter::Finder.new(domain, first_name, last_name, self.key).hunt
     end
 
     def count(domain)

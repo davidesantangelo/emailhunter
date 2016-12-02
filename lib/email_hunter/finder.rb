@@ -1,16 +1,16 @@
 require 'faraday'
 require 'json'
 
-API_GENERATE_URL = 'https://api.emailhunter.co/v1/generate?'
+API_FINDER_URL = 'https://api.hunter.io/v2/email-finder?'
 
 module EmailHunter
-  class Generate
-    attr_reader :status, :email, :score
+  class Finder
+    attr_reader :email, :score, :sources, :domain, :meta
 
     def initialize(domain, first_name, last_name, key)
+      @domain = domain
       @first_name = first_name
       @last_name = last_name
-      @domain = domain
       @key = key
     end
 
@@ -22,7 +22,7 @@ module EmailHunter
     private
 
     def apiresponse
-      url = URI.parse(URI.encode("#{API_GENERATE_URL}domain=#{@domain}&first_name=#{@first_name}&last_name=#{@last_name}&api_key=#{@key}"))
+      url = URI.parse(URI.encode("#{API_FINDER_URL}domain=#{@domain}&first_name=#{@first_name}&last_name=#{@last_name}&api_key=#{@key}"))
       response = Faraday.new(url).get
       response.success? ? JSON.parse(response.body, {symbolize_names: true}) : []
     end

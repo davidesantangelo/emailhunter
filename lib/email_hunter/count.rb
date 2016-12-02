@@ -1,11 +1,11 @@
 require 'faraday'
 require 'json'
 
-API_COUNT_URL = 'https://api.emailhunter.co/v1/email-count?'
+API_COUNT_URL = 'https://api.emailhunter.co/v2/email-count?'
 
 module EmailHunter
   class Count
-    attr_reader :status, :count
+    attr_reader :data, :meta
 
     def initialize(domain)
       @domain = domain

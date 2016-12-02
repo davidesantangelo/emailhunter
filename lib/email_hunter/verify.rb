@@ -1,11 +1,11 @@
 require 'faraday'
 require 'json'
 
-API_VERIFY_URL = 'https://api.emailhunter.co/v1/verify?'
+API_VERIFY_URL = 'https://api.emailhunter.co/v2/email-verifier?'
 
 module EmailHunter
   class Verify
-    attr_reader :status, :email, :result, :score, :regexp, :gibberish, :disposable, :webmail,:mx_records,:smtp_server, :smtp_check,:accept_all, :sources
+    attr_reader :result, :score, :regexp, :gibberish, :disposable, :webmail, :mx_records, :smtp_server, :smtp_check, :accept_all, :sources, :meta
 
     def initialize(email, key)
       @email = email
