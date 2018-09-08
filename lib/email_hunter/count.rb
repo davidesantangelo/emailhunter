@@ -1,7 +1,7 @@
 require 'faraday'
 require 'json'
 
-API_COUNT_URL = 'https://api.emailhunter.co/v2/email-count?'
+API_COUNT_URL = 'https://api.hunter.io/v2/email-count?'
 
 module EmailHunter
   class Count

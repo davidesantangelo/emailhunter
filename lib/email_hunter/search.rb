@@ -1,7 +1,7 @@
 require 'faraday'
 require 'json'
 
-API_SEARCH_URL = 'https://api.emailhunter.co/v2/domain-search?'
+API_SEARCH_URL = 'https://api.hunter.io/v2/domain-search?'
 
 module EmailHunter
   class Search
