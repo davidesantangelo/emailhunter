@@ -27,7 +27,7 @@ require 'emailhunter'
 email_hunter = EmailHunter.new('Your secret API key')
 
 ```
-Your secret API key. You can generate it in your dashboard from https://emailhunter.co
+Your secret API key. You can generate it in your dashboard from https://hunter.io
 
 ## Domain search API
 Returns all the email addresses found using one given domain name, with our sources.
