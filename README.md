@@ -1,6 +1,6 @@
 # Emailhunter
 
-A tiny ruby wrapper around Email Hunter API. Direct access to all the web's email addresses.
+A tiny ruby wrapper around Hunter (former Email Hunter) API. Direct access to all the web's email addresses.
 
 UPDATE (2016-12-02): gem updated with V2 API.
 
