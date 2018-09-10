@@ -1,7 +1,7 @@
 require 'faraday'
 require 'json'
 
-API_VERIFY_URL = 'https://api.emailhunter.co/v2/email-verifier?'
+API_VERIFY_URL = 'https://api.hunter.io/v2/email-verifier?'
 
 module EmailHunter
   class Verify
