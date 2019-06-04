@@ -49,4 +49,11 @@ describe EmailHunter do
       expect(email_hunter.finder('asana.com', 'Dustin', 'Moskovitz').data.fetch(:email)).to eq('dustin@asana.com')
     end
   end
+
+  it 'expect email present' do
+    VCR.use_cassette 'expect email present' do
+      email_hunter = EmailHunter.new(key)
+      expect(email_hunter.account.data.fetch(:email)).not_to be nil
+    end
+  end
 end

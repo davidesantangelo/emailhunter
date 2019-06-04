@@ -109,6 +109,35 @@ result.fetch(:data)
 result.fetch(:meta)
 ```
 
+## Account Information
+This method enables you to get information regarding your Hunter account at any time. This call is free.
+```ruby
+email_hunter.account
+```
+
+## Accessing account response
+```ruby
+result.fetch(:data)
+```
+
+```json
+{  
+   "data":{  
+      "first_name":"Davide",
+      "last_name":"Santangelo",
+      "email":"davide.santangelo@gmail.com",
+      "plan_name":"Free",
+      "plan_level":0,
+      "reset_date":"2019-06-29",
+      "team_id":349,
+      "calls":{  
+         "used":4,
+         "available":50
+      }
+   }
+}
+```
+
 ## License
 The emailhunter GEM is released under the MIT License.
 
