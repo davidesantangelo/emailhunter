@@ -1,7 +1,7 @@
 require 'faraday'
 require 'json'
 
-API_VERIFY_URL = 'https://api.hunter.io/v2/account?'
+API_ACCOUNT_URL = 'https://api.hunter.io/v2/account?'
 
 module EmailHunter
   class Account
@@ -19,7 +19,7 @@ module EmailHunter
     private
 
     def apiresponse
-      url = URI.parse(URI.encode("#{API_VERIFY_URL}&api_key=#{@key}"))
+      url = URI.parse(URI.encode("#{API_ACCOUNT_URL}&api_key=#{@key}"))
       response = Faraday.new(url).get
       response.success? ? JSON.parse(response.body, {symbolize_names: true}) : []
     end
