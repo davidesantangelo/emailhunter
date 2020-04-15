@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'vcr'
 
 describe EmailHunter do
-  let(:key) { 'ece171ff119d84e28ab44f794066ab84e9917d7c' }
+  let(:key) { 'your api key' }
 
   it 'has a version number' do
     expect(EmailHunter::VERSION).not_to be nil
