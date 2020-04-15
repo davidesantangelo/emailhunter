@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'faraday'
 require 'json'
 
@@ -22,7 +24,7 @@ module EmailHunter
     def apiresponse
       url = URI.parse(URI.encode("#{API_VERIFY_URL}email=#{@email}&api_key=#{@key}"))
       response = Faraday.new(url).get
-      response.success? ? JSON.parse(response.body, {symbolize_names: true}) : []
+      response.success? ? JSON.parse(response.body, { symbolize_names: true }) : []
     end
   end
 end
