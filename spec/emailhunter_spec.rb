@@ -10,6 +10,11 @@ describe EmailHunter do
     expect(EmailHunter::VERSION).not_to be nil
   end
 
+  it 'has an api_key' do
+    expect(key).not_to eq('your api key')
+    expect(key).not_to be_empty
+  end
+
   it 'search API expect webmail \'google.com\'' do
     VCR.use_cassette 'search API expect domain \'google.com\'' do
       email_hunter = EmailHunter.new(key)
@@ -56,6 +61,13 @@ describe EmailHunter do
     VCR.use_cassette 'expect email present' do
       email_hunter = EmailHunter.new(key)
       expect(email_hunter.account.data.fetch(:email)).not_to be nil
+    end
+  end
+
+  it 'expect Davide as first_name' do
+    VCR.use_cassette 'expect email present' do
+      email_hunter = EmailHunter.new(key)
+      expect(email_hunter.account.data.fetch(:first_name)).to eq('Davide')
     end
   end
 end

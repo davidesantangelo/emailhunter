@@ -1,7 +1,7 @@
 require 'faraday'
 require 'json'
 
-API_COUNT_URL = 'https://api.hunter.io/v2/email-count?'
+API_COUNT_URL = 'https://api.hunter.io/v2/email-count?'.freeze
 
 module EmailHunter
   class Count
@@ -19,9 +19,8 @@ module EmailHunter
     private
 
     def apiresponse
-      url = URI.parse(URI.encode("#{API_COUNT_URL}domain=#{@domain}"))
-      response = Faraday.new(url).get
-      response.success? ? JSON.parse(response.body, {symbolize_names: true}) : []
+      response = Faraday.new("#{API_COUNT_URL}domain=#{@domain}").get
+      response.success? ? JSON.parse(response.body, { symbolize_names: true }) : []
     end
   end
 end

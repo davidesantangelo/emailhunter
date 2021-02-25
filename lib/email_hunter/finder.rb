@@ -24,8 +24,7 @@ module EmailHunter
     private
 
     def apiresponse
-      url = URI.parse(URI.encode("#{API_FINDER_URL}domain=#{@domain}&first_name=#{@first_name}&last_name=#{@last_name}&api_key=#{@key}"))
-      response = Faraday.new(url).get
+      response = Faraday.new("#{API_FINDER_URL}domain=#{@domain}&first_name=#{@first_name}&last_name=#{@last_name}&api_key=#{@key}").get
       response.success? ? JSON.parse(response.body, { symbolize_names: true }) : []
     end
   end
