@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'vcr'
 
 describe EmailHunter do
-  let(:key) { 'your api key' }
+  let(:key) { 'd6195427a0ece5ce56afc2392374f095a98a4bb1' }
 
   it 'has a version number' do
     expect(EmailHunter::VERSION).not_to be nil
@@ -50,10 +50,11 @@ describe EmailHunter do
     end
   end
 
-  it 'expect dustin@asana.com API finder email' do
-    VCR.use_cassette 'expect dustin@asana.com API generate email' do
+  it 'expect alexis.ohanian@reddit.com API finder email' do
+    VCR.use_cassette 'expect alexis.ohanian@reddit.com API generate email' do
       email_hunter = EmailHunter.new(key)
-      expect(email_hunter.finder('asana.com', 'Dustin', 'Moskovitz').data.fetch(:email)).to eq('dustin@asana.com')
+      expect(email_hunter.finder('reddit.com', 'Alexis',
+                                 'Ohanian').data.fetch(:email)).to eq('alexis.ohanian@reddit.com')
     end
   end
 

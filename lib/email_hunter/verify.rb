@@ -7,7 +7,8 @@ API_VERIFY_URL = 'https://api.hunter.io/v2/email-verifier?'
 
 module EmailHunter
   class Verify
-    attr_reader :result, :score, :regexp, :gibberish, :disposable, :webmail, :mx_records, :smtp_server, :smtp_check, :accept_all, :sources, :meta
+    attr_reader :result, :score, :regexp, :gibberish, :disposable, :webmail, :mx_records, :smtp_server, :smtp_check,
+                :accept_all, :sources, :meta, :key, :email
 
     def initialize(email, key)
       @email = email
@@ -15,15 +16,17 @@ module EmailHunter
     end
 
     def hunt
-      response = apiresponse
-      Struct.new(*response.keys).new(*response.values) unless response.empty?
+      Struct.new(*data.keys).new(*data.values)
     end
 
-    private
+    def data
+      @data ||= begin
+        response = Faraday.new("#{API_VERIFY_URL}email=#{email}&api_key=#{key}").get
 
-    def apiresponse
-      response = Faraday.new("#{API_VERIFY_URL}email=#{@email}&api_key=#{@key}").get
-      response.success? ? JSON.parse(response.body, { symbolize_names: true }) : []
+        return [] unless response.success?
+
+        JSON.parse(response.body, { symbolize_names: true })
+      end
     end
   end
 end

@@ -5,22 +5,24 @@ API_COUNT_URL = 'https://api.hunter.io/v2/email-count?'.freeze
 
 module EmailHunter
   class Count
-    attr_reader :data, :meta
+    attr_reader :data, :meta, :domain
 
     def initialize(domain)
       @domain = domain
     end
 
     def hunt
-      response = apiresponse
-      Struct.new(*response.keys).new(*response.values) unless response.empty?
+      Struct.new(*data.keys).new(*data.values)
     end
 
-    private
-
     def apiresponse
-      response = Faraday.new("#{API_COUNT_URL}domain=#{@domain}").get
-      response.success? ? JSON.parse(response.body, { symbolize_names: true }) : []
+      @data ||= begin
+        response = Faraday.new("#{API_COUNT_URL}domain=#{domain}").get
+
+        return [] unless response.success?
+
+        JSON.parse(response.body, { symbolize_names: true })
+      end
     end
   end
 end

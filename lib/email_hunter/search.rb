@@ -7,7 +7,7 @@ API_SEARCH_URL = 'https://api.hunter.io/v2/domain-search?'
 
 module EmailHunter
   class Search
-    attr_reader :meta, :webmail, :emails, :pattern, :domain
+    attr_reader :meta, :webmail, :emails, :pattern, :domain, :params, :key
 
     def initialize(domain, key, params = {})
       @domain = domain
@@ -16,15 +16,25 @@ module EmailHunter
     end
 
     def hunt
-      response = apiresponse
-      Struct.new(*response.keys).new(*response.values) unless response.empty?
+      Struct.new(*data.keys).new(*data.values)
     end
 
-    private
+    def limit
+      params[:limit] || 10
+    end
 
-    def apiresponse
-      response = Faraday.new("#{API_SEARCH_URL}domain=#{@domain}&api_key=#{@key}&type=#{@params[:type]}&offset=#{@params[:offset]}&limit=#{@params[:limit]}").get
-      response.success? ? JSON.parse(response.body, { symbolize_names: true }) : []
+    def offset
+      params[:offset] || 0
+    end
+
+    def data
+      @data ||= begin
+        response = Faraday.new("#{API_SEARCH_URL}domain=#{domain}&api_key=#{key}&type=#{params[:type]}&offset=#{offset}&limit=#{limit}").get
+
+        return {} unless response.success?
+
+        JSON.parse(response.body, { symbolize_names: true })
+      end
     end
   end
 end

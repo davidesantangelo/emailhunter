@@ -7,7 +7,7 @@ API_EXIST_URL = 'https://api.emailhunter.co/v1/exist?'
 
 module EmailHunter
   class Exist
-    attr_reader :status, :email, :exist, :sources
+    attr_reader :status, :email, :exist, :sources, :key
 
     def initialize(email, key)
       @email = email
@@ -15,15 +15,17 @@ module EmailHunter
     end
 
     def hunt
-      response = apiresponse
-      Struct.new(*response.keys).new(*response.values) unless response.empty?
+      Struct.new(*data.keys).new(*data.values)
     end
 
-    private
+    def data
+      @data ||= begin
+        response = Faraday.new("#{API_EXIST_URL}email=#{email}&api_key=#{key}").get
 
-    def apiresponse
-      response = Faraday.new("#{API_EXIST_URL}email=#{@email}&api_key=#{@key}").get
-      response.success? ? JSON.parse(response.body, { symbolize_names: true }) : []
+        return {} unless response.success?
+
+        JSON.parse(response.body, { symbolize_names: true })
+      end
     end
   end
 end

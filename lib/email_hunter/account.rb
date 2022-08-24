@@ -7,7 +7,8 @@ API_ACCOUNT_URL = 'https://api.hunter.io/v2/account?'
 
 module EmailHunter
   class Account
-    attr_reader :result, :first_name, :last_name, :email, :plan_name, :plan_level, :reset_date, :team_id, :calls, :requests
+    attr_reader :result, :first_name, :last_name, :email, :plan_name, :plan_level, :reset_date, :team_id, :calls,
+                :requests
 
     def initialize(key)
       @key = key
