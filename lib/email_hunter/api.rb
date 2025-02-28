@@ -44,7 +44,7 @@ module EmailHunter
     def account
       execute_hunt(Account)
     end
-    
+
     # Company Information API
     def company(domain)
       execute_hunt(Company, domain)

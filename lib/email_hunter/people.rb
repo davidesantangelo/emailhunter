@@ -7,7 +7,7 @@ require 'ostruct'
 module EmailHunter
   class People
     API_URL = 'https://api.hunter.io/v2/people/find'
-    
+
     attr_reader :email, :key
 
     def initialize(email, key)
@@ -18,19 +18,19 @@ module EmailHunter
     def hunt
       response_data = fetch_people_data
       return nil if response_data.empty?
-      
+
       # Convert nested data structure to a Struct
       data = response_data[:data]
       meta = response_data[:meta]
-      
+
       result = OpenStruct.new(
         data: OpenStruct.new(data),
         meta: OpenStruct.new(meta)
       )
-      
+
       # Recursively convert nested hashes to OpenStructs for deeper access
       convert_hash_to_struct(result.data, data)
-      
+
       result
     end
 
@@ -40,7 +40,7 @@ module EmailHunter
       @fetch_people_data ||= begin
         connection = Faraday.new
         response = connection.get(API_URL, email: email, api_key: key)
-        
+
         return {} unless response.success?
 
         JSON.parse(response.body, symbolize_names: true)

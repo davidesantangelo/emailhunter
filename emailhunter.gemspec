@@ -14,11 +14,11 @@ Gem::Specification.new do |spec|
     email discovery capabilities into your sales and marketing workflows.
   DESC
   spec.license       = 'MIT'
-  
+
   # Adding additional metadata improves discoverability
   spec.homepage      = 'https://github.com/davidesantangelo/emailhunter'
   spec.metadata      = {
-    "source_code_uri" => "https://github.com/davidesantangelo/emailhunter"
+    'source_code_uri' => 'https://github.com/davidesantangelo/emailhunter'
   }
 
   # Automatically include all version-controlled files except tests and specs

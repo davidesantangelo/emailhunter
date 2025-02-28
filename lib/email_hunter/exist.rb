@@ -6,7 +6,7 @@ require 'json'
 module EmailHunter
   class Exist
     API_URL = 'https://api.emailhunter.co/v1/exist'
-    
+
     attr_reader :email, :key
 
     def initialize(email, key)
@@ -17,7 +17,7 @@ module EmailHunter
     def hunt
       response_data = fetch_exist_data
       return nil if response_data.empty?
-      
+
       Struct.new(*response_data.keys).new(*response_data.values)
     end
 
@@ -27,7 +27,7 @@ module EmailHunter
       @fetch_exist_data ||= begin
         connection = Faraday.new
         response = connection.get(API_URL, email: email, api_key: key)
-        
+
         return {} unless response.success?
 
         JSON.parse(response.body, symbolize_names: true)

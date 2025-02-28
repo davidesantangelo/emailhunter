@@ -71,12 +71,12 @@ describe EmailHunter do
       expect(email_hunter.account.data.fetch(:first_name)).to eq('Davide')
     end
   end
-  
+
   it 'company API returns correct data for stripe.com' do
     VCR.use_cassette 'company API returns correct data for stripe.com' do
       email_hunter = EmailHunter.new(key)
       result = email_hunter.company('stripe.com')
-      
+
       expect(result.data.name).to eq('Stripe')
       expect(result.data.description).not_to be_nil
       expect(result.data.foundedYear).to eq(2010)
@@ -90,11 +90,11 @@ describe EmailHunter do
     VCR.use_cassette 'people API returns employee data for patrick@stripe.com' do
       email_hunter = EmailHunter.new(key)
       result = email_hunter.people('patrick@stripe.com')
-      
+
       # Verify overall structure
       expect(result.data).not_to be_nil
       expect(result.meta).not_to be_nil
-      
+
       # Verify person data
       expect(result.data.name.fullName).to eq('Patrick Roide')
       expect(result.data.name.givenName).to eq('Patrick')
@@ -104,7 +104,7 @@ describe EmailHunter do
       expect(result.data.employment.domain).to eq('stripe.com')
       expect(result.data.employment.name).to eq('Stripe')
       expect(result.data.employment.title).to eq('Account Executive')
-      
+
       # Verify meta data
       expect(result.meta.email).to eq('patrick@stripe.com')
     end
