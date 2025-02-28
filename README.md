@@ -1,6 +1,6 @@
 # EmailHunter
 
-A lightweight Ruby wrapper around Hunter (formerly Email Hunter) API, providing direct access to email search, verification, and company insights.
+A lightweight Ruby wrapper around [Hunter.io](https://hunter.io/) (formerly Email Hunter) API, providing direct access to email search, verification, and company insights.
 
 ## Installation
 
