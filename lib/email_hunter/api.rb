@@ -2,14 +2,12 @@
 
 require 'uri'
 
-require File.expand_path(File.join(File.dirname(__FILE__), 'exist'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'search'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'finder'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'verify'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'count'))
-require File.expand_path(File.join(File.dirname(__FILE__), 'account'))
+%w[exist search finder verify count account company people].each do |file|
+  require_relative file
+end
 
 module EmailHunter
+  # Main API client for EmailHunter services
   class Api
     attr_reader :key
 
@@ -19,17 +17,17 @@ module EmailHunter
 
     # Domain search API
     def search(domain, params = {})
-      EmailHunter::Search.new(domain, key, params).hunt
+      execute_hunt(Search, domain, params)
     end
 
     # Email exist API
     def exist(email)
-      EmailHunter::Exist.new(email, key).hunt
+      execute_hunt(Exist, email)
     end
 
     # Email verify API
     def verify(email)
-      EmailHunter::Verify.new(email, key).hunt
+      execute_hunt(Verify, email)
     end
 
     # Email Finder API
@@ -39,12 +37,45 @@ module EmailHunter
 
     # Email Count API
     def count(domain)
-      EmailHunter::Count.new(domain).hunt
+      execute_hunt(Count, domain)
     end
 
     # Account Information API
     def account
-      EmailHunter::Account.new(key).hunt
+      execute_hunt(Account)
+    end
+    
+    # Company Information API
+    def company(domain)
+      execute_hunt(Company, domain)
+    end
+
+    # People Information API
+    def people(domain)
+      execute_hunt(People, domain)
+    end
+
+    private
+
+    # Helper method to reduce repetition
+    def execute_hunt(klass, *args)
+      case klass.name.split('::').last
+      when 'Search'
+        # Search expects (domain, key, params)
+        domain, params = args
+        klass.new(domain, key, params || {}).hunt
+      when 'Count'
+        # Count doesn't need key
+        domain = args.first
+        klass.new(domain).hunt
+      when 'Account'
+        # Account only needs key
+        klass.new(key).hunt
+      else
+        # Other classes expect (value, key)
+        value = args.first
+        klass.new(value, key).hunt
+      end
     end
   end
 end

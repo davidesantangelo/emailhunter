@@ -1,8 +1,6 @@
-# Emailhunter
+# EmailHunter
 
-A tiny ruby wrapper around Hunter (former Email Hunter) API. Direct access to all the web's email addresses.
-
-UPDATE (2016-12-02): gem updated with V2 API.
+A lightweight Ruby wrapper around Hunter (formerly Email Hunter) API, providing direct access to email search, verification, and company insights.
 
 ## Installation
 
@@ -12,30 +10,37 @@ Add this line to your application's Gemfile:
 gem 'emailhunter'
 ```
 
-And then execute:
+Then execute:
 
-    $ bundle
+```sh
+$ bundle install
+```
 
-Or install it yourself as:
+Or install it yourself with:
 
-    $ gem install emailhunter
+```sh
+$ gem install emailhunter
+```
 
 ## Usage
 
 ```ruby
 require 'emailhunter'
-email_hunter = EmailHunter.new('Your secret API key')
-
+email_hunter = EmailHunter.new('Your API Key')
 ```
-Your secret API key. You can generate it in your dashboard from https://hunter.io
 
-## Domain search API
-Returns all the email addresses found using one given domain name, with our sources.
+Your API key can be generated in your [Hunter dashboard](https://hunter.io).
+
+## Features
+
+### 1. Domain Search API
+Retrieve all email addresses associated with a given domain.
+
 ```ruby
 result = email_hunter.search('stripe.com')
 ```
 
-## Accessing domain search response
+#### Response Fields:
 ```ruby
 result.fetch(:meta)
 result.fetch(:webmail)
@@ -43,13 +48,15 @@ result.fetch(:emails)
 result.fetch(:pattern)
 result.fetch(:domain)
 ```
-## Email Verify API
-Allows you to verify the deliverability of an email address.
+
+### 2. Email Verification API
+Check the deliverability of an email address.
+
 ```ruby
-email_hunter.verify('bonjour@firmapi.com')
+result = email_hunter.verify('bonjour@firmapi.com')
 ```
 
-## Accessing email verify response
+#### Response Fields:
 ```ruby
 result.fetch(:result)
 result.fetch(:score)
@@ -62,33 +69,16 @@ result.fetch(:smtp_check)
 result.fetch(:accept_all)
 result.fetch(:sources)
 result.fetch(:meta)
-
 ```
 
-## Email Exist API (only for V1)
-This API call is deprecated, please use the email verification call instead.
-
-
-This API endpoint allows you to check if a given email address has been found on the web. If it has been found, it returns all the sources with the dates of the last crawls.
+### 3. Email Finder API
+Guess the most likely email of a person using their first name, last name, and domain.
 
 ```ruby
-email_hunter.exist('bonjour@firmapi.com')
+result = email_hunter.finder('gmail.com', 'Davide', 'Santangelo')
 ```
 
-## Accessing email verify response
-```ruby
-result.status
-result.email
-result.exist
-result.sources
-```
-
-## Finder API (legacy generate)
-Guesses the most likely email of a person from his first name, his last name and a domain name.
-```ruby
-email_hunter.finder('gmail.com', 'Davide', 'Santangelo')
-```
-## Accessing finder response
+#### Response Fields:
 ```ruby
 result.fetch(:email)
 result.fetch(:score)
@@ -97,55 +87,85 @@ result.fetch(:domain)
 result.fetch(:meta)
 ```
 
-## Count API
-Returns the number of email addresses found for a domain. This is a FREE API call.
+### 4. Count API
+Retrieve the number of email addresses associated with a domain (FREE API call).
+
 ```ruby
-email_hunter.count('gmail.com')
+result = email_hunter.count('gmail.com')
 ```
 
-## Accessing count response
+#### Response Fields:
 ```ruby
 result.fetch(:data)
 result.fetch(:meta)
 ```
 
-## Account Information
-This method enables you to get information regarding your Hunter account at any time. This call is free.
+### 5. Company Information API (New Feature)
+Retrieve company details using a domain name.
+
 ```ruby
-email_hunter.account
+result = email_hunter.company('stripe.com')
 ```
 
-## Accessing account response
+#### Response Fields:
 ```ruby
-result.fetch(:data)
+result.fetch(:name)
+result.fetch(:industry)
+result.fetch(:employees)
+result.fetch(:country)
+result.fetch(:meta)
 ```
 
+### 6. People Search API (New Feature)
+Retrieve key individuals associated with a company based on a domain name.
+
+```ruby
+result = email_hunter.people('stripe.com')
+```
+
+#### Response Fields:
+```ruby
+result.fetch(:employees)
+result.fetch(:position)
+result.fetch(:email)
+result.fetch(:meta)
+```
+
+### 7. Account Information API
+Retrieve details about your Hunter account.
+
+```ruby
+result = email_hunter.account
+```
+
+#### Response Example:
 ```json
-{  
-   "data":{  
-      "first_name":"Davide",
-      "last_name":"Santangelo",
-      "email":"davide.santangelo@gmail.com",
-      "plan_name":"Free",
-      "plan_level":0,
-      "reset_date":"2019-06-29",
-      "team_id":349,
-      "calls":{  
-         "used":4,
-         "available":50
+{
+   "data": {
+      "first_name": "Davide",
+      "last_name": "Santangelo",
+      "email": "davide.santangelo@gmail.com",
+      "plan_name": "Free",
+      "plan_level": 0,
+      "reset_date": "2025-06-29",
+      "team_id": 349,
+      "calls": {
+         "used": 4,
+         "available": 50
       }
    }
 }
 ```
 
 ## License
-The emailhunter GEM is released under the MIT License.
 
+The EmailHunter gem is released under the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/emailhunter/fork )
+1. Fork it ( https://github.com/[your-github-username]/emailhunter/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+

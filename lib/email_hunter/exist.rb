@@ -3,11 +3,11 @@
 require 'faraday'
 require 'json'
 
-API_EXIST_URL = 'https://api.emailhunter.co/v1/exist?'
-
 module EmailHunter
   class Exist
-    attr_reader :status, :email, :exist, :sources, :key
+    API_URL = 'https://api.emailhunter.co/v1/exist'
+    
+    attr_reader :email, :key
 
     def initialize(email, key)
       @email = email
@@ -15,16 +15,22 @@ module EmailHunter
     end
 
     def hunt
-      Struct.new(*data.keys).new(*data.values)
+      response_data = fetch_exist_data
+      return nil if response_data.empty?
+      
+      Struct.new(*response_data.keys).new(*response_data.values)
     end
 
-    def data
-      @data ||= begin
-        response = Faraday.new("#{API_EXIST_URL}email=#{email}&api_key=#{key}").get
+    private
 
+    def fetch_exist_data
+      @fetch_exist_data ||= begin
+        connection = Faraday.new
+        response = connection.get(API_URL, email: email, api_key: key)
+        
         return {} unless response.success?
 
-        JSON.parse(response.body, { symbolize_names: true })
+        JSON.parse(response.body, symbolize_names: true)
       end
     end
   end

@@ -3,12 +3,11 @@
 require 'faraday'
 require 'json'
 
-API_VERIFY_URL = 'https://api.hunter.io/v2/email-verifier?'
-
 module EmailHunter
   class Verify
-    attr_reader :result, :score, :regexp, :gibberish, :disposable, :webmail, :mx_records, :smtp_server, :smtp_check,
-                :accept_all, :sources, :meta, :key, :email
+    API_URL = 'https://api.hunter.io/v2/email-verifier'
+    
+    attr_reader :email, :key
 
     def initialize(email, key)
       @email = email
@@ -16,16 +15,22 @@ module EmailHunter
     end
 
     def hunt
-      Struct.new(*data.keys).new(*data.values)
+      response_data = fetch_verify_data
+      return nil if response_data.empty?
+      
+      Struct.new(*response_data.keys).new(*response_data.values)
     end
 
-    def data
-      @data ||= begin
-        response = Faraday.new("#{API_VERIFY_URL}email=#{email}&api_key=#{key}").get
+    private
 
-        return [] unless response.success?
+    def fetch_verify_data
+      @fetch_verify_data ||= begin
+        connection = Faraday.new
+        response = connection.get(API_URL, email: email, api_key: key)
+        
+        return {} unless response.success?
 
-        JSON.parse(response.body, { symbolize_names: true })
+        JSON.parse(response.body, symbolize_names: true)
       end
     end
   end

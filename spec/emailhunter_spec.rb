@@ -50,11 +50,11 @@ describe EmailHunter do
     end
   end
 
-  it 'expect alexis.ohanian@reddit.com API finder email' do
+  it 'expect alexis@reddit.com API finder email' do
     VCR.use_cassette 'expect alexis.ohanian@reddit.com API generate email' do
       email_hunter = EmailHunter.new(key)
       expect(email_hunter.finder('reddit.com', 'Alexis',
-                                 'Ohanian').data.fetch(:email)).to eq('alexis.ohanian@reddit.com')
+                                 'Ohanian').data.fetch(:email)).to eq('alexis@reddit.com')
     end
   end
 
@@ -69,6 +69,44 @@ describe EmailHunter do
     VCR.use_cassette 'expect email present' do
       email_hunter = EmailHunter.new(key)
       expect(email_hunter.account.data.fetch(:first_name)).to eq('Davide')
+    end
+  end
+  
+  it 'company API returns correct data for stripe.com' do
+    VCR.use_cassette 'company API returns correct data for stripe.com' do
+      email_hunter = EmailHunter.new(key)
+      result = email_hunter.company('stripe.com')
+      
+      expect(result.data.name).to eq('Stripe')
+      expect(result.data.description).not_to be_nil
+      expect(result.data.foundedYear).to eq(2010)
+      expect(result.data.site.emailAddresses).to be_an(Array)
+      expect(result.data.tech).to be_an(Array)
+      expect(result.meta.domain).to eq('stripe.com')
+    end
+  end
+
+  it 'people API returns employee data for patrick@stripe.com' do
+    VCR.use_cassette 'people API returns employee data for patrick@stripe.com' do
+      email_hunter = EmailHunter.new(key)
+      result = email_hunter.people('patrick@stripe.com')
+      
+      # Verify overall structure
+      expect(result.data).not_to be_nil
+      expect(result.meta).not_to be_nil
+      
+      # Verify person data
+      expect(result.data.name.fullName).to eq('Patrick Roide')
+      expect(result.data.name.givenName).to eq('Patrick')
+      expect(result.data.name.familyName).to eq('Roide')
+      expect(result.data.email).to eq('patrick@stripe.com')
+      expect(result.data.timeZone).to eq('America/Denver')
+      expect(result.data.employment.domain).to eq('stripe.com')
+      expect(result.data.employment.name).to eq('Stripe')
+      expect(result.data.employment.title).to eq('Account Executive')
+      
+      # Verify meta data
+      expect(result.meta.email).to eq('patrick@stripe.com')
     end
   end
 end
