@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Use require_relative to load the version file
 require_relative 'lib/email_hunter/version'
 

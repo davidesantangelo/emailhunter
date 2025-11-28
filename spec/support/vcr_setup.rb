@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # spec/support/vcr_setup.rb
 VCR.configure do |c|
   # the directory where your cassettes will be saved
